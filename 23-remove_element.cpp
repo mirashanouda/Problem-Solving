@@ -18,38 +18,48 @@ Do not allocate extra space for another array. You must do this by modifying the
 #include <vector>
 using namespace std;
 
-int removeElement(vector<int> nums) {
-    /*
-    * first part
-    * rerturn k 
-    0,1,2,2,3,0,4,2 -- k=2, p=2
-    .             .
-    */
-
-    int n = (int)nums.size();
-    if(n < 2)
-        return n;
-
-    int k = 1; 
-    int curr = nums[0]; 
-    int i = 1; 
-
-    while(curr <= nums[i] && i < n){
-        if(curr == nums[i]){
-            nums.push_back(-1); 
-            nums.erase(nums.begin() + i);
+int removeDuplicates(vector<int>& nums) {
+        int n = (int)nums.size();
+        if(n < 2)
+            return n;
+        
+        //printf("n = %d\n", n);
+        int k = 1; 
+        int curr = nums[0]; 
+        int neg = -1000;
+        for(int i = 1; i < n && curr <= nums[i]; i++){
+            if(curr == nums[i]){
+                nums.erase(nums.begin() + i);
+                nums.push_back(neg); 
+                cout << nums[i] << endl;
+                i--;
+            }
+            else {
+                curr = nums[i];
+                ++k;
+            }
         }
-        else {
-            curr = nums[i];
-            ++k;
-            ++i;
-        }
+        //printf("curr = %d\n", curr);
+        //int i = 1; 
+        //int neg = -1000;
+        //
+        //while(curr <= nums[i] && i < n){
+        //    if(curr == nums[i]){
+        //        nums.erase(nums.begin() + i);
+        //        nums.push_back(neg); 
+        //        cout << nums[i] << endl;
+        //    }
+        //    else {
+        //        curr = nums[i];
+        //        ++k;
+        //        ++i;
+        //    }
+        //}
+        return k; 
     }
-    return k; 
-}
 
 int main(){
-    vector<int> arr = {1,1};
+    vector<int> arr = {1,2};
     //0,1,2,2,3,3,4, 0,1,1
     //cur = 0
     //start from 1 
@@ -57,7 +67,7 @@ int main(){
     //else i++ and k++
     //k starts from 1 
     //while condition is cur <= arr[i]
-    cout << removeElement(arr)<<endl;
+    cout << removeDuplicates(arr)<<endl;
     //cout<<"array" <<endl;
     //for(int i = 0; i<arr.size(); i++)
     //    cout <<arr[i] << ", ";
